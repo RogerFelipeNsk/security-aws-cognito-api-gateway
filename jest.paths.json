@@ -1,0 +1,5 @@
+{
+  "@libs/(.*)": "<rootDir>/src/libs/$1",
+  "@functions/(.*)": "<rootDir>/src/functions/$1",
+  "@src/(.*)": "<rootDir>/src/$1"
+}

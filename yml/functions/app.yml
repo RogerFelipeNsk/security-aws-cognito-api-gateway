@@ -1,0 +1,32 @@
+app:
+  handler: src/functions/main/handler.main
+  #role: LambdaRole
+  memorySize: 1536
+  timeout: 29
+  environment:
+    TABLE_NAME: ${self:custom.variables.${sls:stage}.tableName}
+    TABLE_STREAM_ARN: ${self:custom.variables.${sls:stage}.tableStreamArn}
+  events:
+    - http:
+        path: /
+        method: POST
+        authorizer: ${self:custom.variables.${sls:stage}.cognitoArn}
+        private: true
+        cors:
+          origin: "*"
+          maxAge: 86400
+        request:
+          schemas:
+            application/json: ${file(src/functions/main/schema.json):createSchema}
+
+    - http:
+        path: /
+        method: PUT
+        authorizer: ${self:custom.variables.${sls:stage}.cognitoArn}
+        private: true
+        cors:
+          origin: "*"
+          maxAge: 86400
+        request:
+          schemas:
+            application/json: ${file(src/functions/main/schema.json):updateSchema}

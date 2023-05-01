@@ -1,0 +1,30 @@
+esbuild:
+  bundle: true
+  minify: false
+  sourcemap: true
+  exclude: ["aws-sdk"]
+  target: node18
+  define: { "require.resolve": undefined }
+  platform: node
+  concurrency: 10
+parameters:
+  API_KEYS: "${ssm:/cursos/api-keys}"
+variables:
+  local:
+    cognitoArn: "null"
+    tableName: ${env:TABLE_NAME}
+    tableStreamArn: ${env:TABLE_STREAM_ARN}
+  deploy:
+    cognitoArn: ${self:custom.parameters.API_KEYS.cognitoArn}
+    tableName: ${construct:genericTable.tableName}
+    tableStreamArn: ${construct:genericTable.tableStreamArn}
+apiKeys:
+  - name: security-aws-cognito-api-gateway-api-key
+    value: ${self:custom.parameters.API_KEYS.${self:service}}
+    description: Chave de api de teste do curso
+    usagePlan:
+      name: "security-aws-cognito-api-gateway-usage-plan"
+      description: "usage plan for API_KEY"
+      throttle:
+        burstLimit: 10
+        rateLimit: 5
