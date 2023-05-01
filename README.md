@@ -306,6 +306,7 @@ curl --request PUT \
 
 Neste artigo vimos como criar um usuário no Cognito, como criar um grupo de usuários, como adicionar o usuário ao grupo, como criar uma API Gateway com autenticação Cognito e como testar a API localmente e na AWS.
 Implementamos a solução pensando em uma arquitetura serverless escalável, segura e que possa ser de facil manutenção.
+A segurança é um fator muito importante e sempre devemos previnir de deixar no repositório as chaves de acesso, por isso, sempre utilize o .gitignore para não enviar arquivos sensíveis para o repositório.
 
 ### todos
 - [ ] Adicionar os métodos de DELETE, GET e LIST
